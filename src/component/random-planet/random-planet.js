@@ -6,7 +6,6 @@ import Planet from './../../services/planet';
 import './random-planet.css';
 
 
-
 export default class RandomPlanet extends Component {
 
   _service = new Planet()
@@ -16,9 +15,23 @@ export default class RandomPlanet extends Component {
     error: false
   };
 
-  constructor() {
-    super();
+  // constructor() {
+  //   super();
+  //   console.log('constructor');
+  //   this.updatePlanet();
+  //   setInterval(this.updatePlanet, 1000);
+  // }
+
+  componentDidMount() {
     this.updatePlanet();
+    // setInterval(this.updatePlanet, 1000);
+    this.interval = setInterval(this.updatePlanet, 11000);
+    console.log('componentDidMount');
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+    console.log('componentWillUnMount');
   }
 
   onPlanetLoaded = (planet) => {
@@ -36,7 +49,8 @@ export default class RandomPlanet extends Component {
     });
   }
 
-  updatePlanet() {
+  updatePlanet = () => {
+    console.log('update');
     const id = Math.floor(Math.random() * 55 + 2);
     this._service._read(id).then(
       this.onPlanetLoaded
@@ -45,13 +59,14 @@ export default class RandomPlanet extends Component {
 
 
   render() {
+    console.log('render');
     const {planet, loading, error} = this.state;
 
     const hasData = !(loading || error)
 
-    const isError = error ? <ErrorIndicator/>: null;
-    const spinner = loading ? <Spinner/>: null;
-    const content = hasData ? <PlanetPreview planet={planet}/>: null;
+    const isError = error ? <ErrorIndicator/> : null;
+    const spinner = loading ? <Spinner/> : null;
+    const content = hasData ? <PlanetPreview planet={planet}/> : null;
 
     return (
       <div className="random-planet jumbotron rounded">
@@ -63,8 +78,6 @@ export default class RandomPlanet extends Component {
 
   }
 }
-
-
 
 const PlanetPreview = ({planet}) => {
   const {id, name, population, rotationPeriod, diameter} = planet;
@@ -94,5 +107,5 @@ const PlanetPreview = ({planet}) => {
 }
 
 function Image(props) {
-  return <img className="planet-image" src={props.src}/>;
+  return <img className="planet-image" src={props.src} alt="planet"/>;
 }

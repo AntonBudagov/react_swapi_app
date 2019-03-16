@@ -5,10 +5,11 @@ export default class People extends AppService {
     super(endpoint = '/people/')
   }
 
-  _extractId(payload) {
+  _extractId = (payload) => {
     const idRegExp = /\/([0-9]*)\/$/;
-    const id = payload.url.match(idRegExp)[1];
-    return id
+    // const id = payload.url.match(idRegExp)[1];
+    // return id
+    return payload.url.match(idRegExp)[1];
   }
 
   async _read(id) {
@@ -23,6 +24,16 @@ export default class People extends AppService {
       population: person.population,
     }
 
+  }
+
+  async _list() {
+    const personList = await this.list();
+    return personList.map((item) => {
+      return {
+        id: this._extractId(item),
+        name: item.name,
+      }
+    })
   }
 
   // read(id) {
