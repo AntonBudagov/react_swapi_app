@@ -2,7 +2,7 @@ import AppService from './app';
 
 export default class People extends AppService {
   constructor(endpoint) {
-    super(endpoint = '/people/')
+    super(endpoint = '/starhip/')
   }
 
   _extractId(payload) {
@@ -24,11 +24,4 @@ export default class People extends AppService {
     }
 
   }
-
-  // read(id) {
-  //   return super.read(id)
-  // }
-  // list() {
-  //   return super.list()
-  // }
 }
