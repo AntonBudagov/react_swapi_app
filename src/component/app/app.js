@@ -1,10 +1,12 @@
 import React, {Component, useState} from 'react';
 
 
+import Planet from './../../services/planet';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import PersonPage from '../people-page';
+import PlanetPage from '../planet-page';
 // import ItemList from '../item-list';
 // import PersonDetails from '../person-details';
 
@@ -12,12 +14,17 @@ import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator';
 
 import './app.css';
+import ItemList from "../item-list";
+import PersonDetails from "../person-details";
+
 
 export default class App extends Component {
 
+  _service = new Planet();
+
   state = {
     showRandomPlanet: false,
-    selectedPerson: 4,
+    selectedPerson: 4
     // hasError: false
   };
 
@@ -58,8 +65,18 @@ export default class App extends Component {
           <ErrorButton/>
 
           <PersonPage/>
+          <hr/>
+          <PlanetPage/>
+          <hr/>
 
-
+          {/*<div className="row mt-4">*/}
+            {/*<div className="col-md-6">*/}
+              {/*<h1>Planet</h1>*/}
+              {/*<ItemList*/}
+                {/*getData={this._service._list}*/}
+              {/*/>*/}
+            {/*</div>*/}
+          {/*</div>*/}
         </div>
       </div>
     );

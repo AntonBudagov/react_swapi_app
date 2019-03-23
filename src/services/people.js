@@ -26,12 +26,13 @@ export default class People extends AppService {
 
   }
 
-  async _list() {
+  _list = async () => {
     const personList = await this.list();
     return personList.map((item) => {
       return {
         id: this._extractId(item),
         name: item.name,
+        gender: item.gender,
       }
     })
   }

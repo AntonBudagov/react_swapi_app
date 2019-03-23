@@ -2,41 +2,42 @@ import React, {Component} from 'react';
 
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator'
-import People from './../../services/people';
+// import People from './../../services/people';
 
 import './item-list.css';
 
 
 export default class ItemList extends Component {
 
-  _service = new People();
+  // _service = new People();
   state = {
-    peopleList: [],
+    itemList: [],
     error: false,
     loading: false
   };
 
   componentDidMount() {
-    this._service._list().then((peopleList) => {
+    const  { getData } = this.props;
+
+    getData().then((itemList) => {
       this.setState({
-        peopleList
+        itemList
       })
     }).catch(this.onError)
   }
 
-  // onPersonSelected(id) {
-  //   console.log(id);
-  // }
 
   renderItems = (arr) => {
     return arr.map((person) => {
+      const label = this.props.renderItem(person)
       return (
         <li className="list-group-item"
             key={person.id}
             onClick={() => {
               this.props.onItemSelected(person.id)
             }}>
-          {person.name}
+          {/*{person.name}*/}
+          {label}
 
         </li>
       )
@@ -46,7 +47,7 @@ export default class ItemList extends Component {
 
 
   render() {
-    const {peopleList, loading, error} = this.state;
+    const {itemList, loading, error} = this.state;
 
     const hasData = !(loading || error)
 
@@ -55,7 +56,7 @@ export default class ItemList extends Component {
 
     return (
       <ul className="item-list list-group">
-        {this.renderItems(peopleList)}
+        {this.renderItems(itemList)}
       </ul>
     );
   }

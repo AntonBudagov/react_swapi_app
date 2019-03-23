@@ -21,7 +21,16 @@ export default class Planet extends AppService {
       rotationPeriod: planet.rotation_period,
       diameter: planet.diameter,
     }
+  }
 
+  _list = async () => {
+    const planetList = await this.list();
+    return planetList.map((item) => {
+      return {
+        id: this._extractId(item),
+        name: item.name,
+      }
+    })
   }
 
   // read(id)

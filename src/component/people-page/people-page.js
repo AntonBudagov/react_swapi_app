@@ -4,9 +4,11 @@ import './people-page.css';
 import ItemList from "../item-list";
 import PersonDetails from "../person-details";
 import ErrorIndicator from "../error-indicator";
-
+import Person from "../../services/people";
 
 export default class PersonPage extends Component {
+
+  _service = new Person();
 
   state = {
     selectedPerson: 4,
@@ -43,7 +45,12 @@ export default class PersonPage extends Component {
     return (
       <div className="row mt-4">
         <div className="col-md-6">
-          <ItemList onItemSelected={this.onPersonSelected}/>
+          <h1>Person</h1>
+          <ItemList
+            onItemSelected={this.onPersonSelected}
+            getData={this._service._list}
+            renderItem={({name, gender}) => (<span>{name} <b>({gender})</b></span>)}
+          />
         </div>
         <div className="col-md-6">
           <PersonDetails personId={this.state.selectedPerson}/>
