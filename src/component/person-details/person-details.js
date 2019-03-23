@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Person from './../../services/people';
 import './person-details.css';
 import Spinner from '../spinner';
+import ErrorButton from "../error-button";
 
 export default class PersonDetails extends Component {
 
@@ -60,7 +61,9 @@ export default class PersonDetails extends Component {
       <div className="person-details card">
         {spinner}
         {content}
+
       </div>
+
     )
   }
 }
@@ -89,6 +92,8 @@ const PersonPreview = ({person}) => {
             <span>{eyeColor}</span>
           </li>
         </ul>
+        <br/>
+        <ErrorButton/>
       </div>
     </React.Fragment>
   )
