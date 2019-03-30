@@ -29,6 +29,7 @@ export default class Planet extends AppService {
       return {
         id: this._extractId(item),
         name: item.name,
+        diameter: item.diameter
       }
     })
   }

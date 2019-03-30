@@ -30,40 +30,40 @@ export default class PlanetPage extends Component {
       selectedPlanet: id
     })
   };
-
-
+  // old
+  // <ItemList
+  // onItemSelected={this.onPlanetSelected}
+  // getData={this._service._list}
+  // renderItem={({name}, {diameter}) => <span>{name} <b>({diameter})</b></span>}/>
   render() {
     const itemList = (
-      <ItemList
-        onItemSelected={this.onPlanetSelected}
-        getData={this._service._list}
-        renderItem={({name}) => name}/>
+    <ItemList
+      onItemSelected={this.onPlanetSelected}
+      getData={this._service._list}
+    >
+      {(i) => (
+        <span>{i.name} <b>({i.diameter})</b></span>
+      )}
+    </ItemList>
     );
     const planetDetails = (
       <PlanetDetails planetId={this.state.selectedPlanet}/>
     );
 
-    // if (this.state.hasError) {
-    //   return (
-    //     <div className="row mt-4">
-    //       <div className="col-md-12">
-    //         <div className="card">
-    //           <ErrorIndicator/>
-    //         </div>
-    //       </div>
-    //
-    //     </div>
-    //   )
-    // }
+    if (this.state.hasError) {
+      return (
+        <div className="row mt-4">
+          <div className="col-md-12">
+            <div className="card">
+              <ErrorIndicator/>
+            </div>
+          </div>
 
-    return (
-      <div>
-        <Row left={(<h1>ff1</h1>)} right="ff2"/>
-        <Row left={itemList} right={planetDetails}/>
-      </div>
+        </div>
+      )
+    }
 
-
-    )
+    return <Row left={itemList} right={planetDetails}/>;
   }
 }
 

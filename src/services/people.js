@@ -10,6 +10,10 @@ export default class People extends AppService {
     // const id = payload.url.match(idRegExp)[1];
     // return id
     return payload.url.match(idRegExp)[1];
+  };
+
+  getImage = ({id}) => {
+    return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`
   }
 
   async _read(id) {

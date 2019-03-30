@@ -25,11 +25,27 @@ export default class ItemList extends Component {
       })
     }).catch(this.onError)
   }
-
+  // old
+  // renderItems = (arr) => {
+  //   return arr.map((person) => {
+  //     const label = this.props.renderItem(person)
+  //     return (
+  //       <li className="list-group-item"
+  //           key={person.id}
+  //           onClick={() => {
+  //             this.props.onItemSelected(person.id)
+  //           }}>
+  //         {/*{person.name}*/}
+  //         {label}
+  //
+  //       </li>
+  //     )
+  //   })
+  // }
 
   renderItems = (arr) => {
     return arr.map((person) => {
-      const label = this.props.renderItem(person)
+      const label = this.props.children(person)
       return (
         <li className="list-group-item"
             key={person.id}
