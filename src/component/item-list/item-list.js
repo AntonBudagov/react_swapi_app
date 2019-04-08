@@ -1,30 +1,71 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-import Spinner from '../spinner';
-import ErrorIndicator from '../error-indicator'
+
 // import People from './../../services/people';
 
 import './item-list.css';
+import {withData} from '../hoc-helper';
+
+const ItemList = (props) => {
 
 
-export default class ItemList extends Component {
+  const {data, onItemSelected, children: renderLabel} = props;
+  const items = data.map((item) => {
+    // const label = this.props.children(item)
+    const label = renderLabel(item);
+    return (
+      <li className="list-group-item"
+          key={item.id}
+          onClick={() => {
+            onItemSelected(item.id)
+          }}>
+        {/*{person.name}*/}
+        {label}
 
+      </li>
+    )
+  });
+
+  return (
+    <ul className="item-list list-group">
+      {items}
+    </ul>
+  );
+
+
+  // renderItems = (arr) => {
+  //   return arr.map((person) => {
+  //     const label = this.props.children(person)
+  //     return (
+  //       <li className="list-group-item"
+  //           key={person.id}
+  //           onClick={() => {
+  //             this.props.onItemSelected(person.id)
+  //           }}>
+  //         {/*{person.name}*/}
+  //         {label}
+  //
+  //       </li>
+  //     )
+  //   })
+  //
+  // };
   // _service = new People();
-  state = {
-    itemList: [],
-    error: false,
-    loading: false
-  };
+  // state = {
+  //   itemList: [],
+  //   error: false,
+  //   loading: false
+  // };
 
-  componentDidMount() {
-    const  { getData } = this.props;
-
-    getData().then((itemList) => {
-      this.setState({
-        itemList
-      })
-    }).catch(this.onError)
-  }
+  // componentDidMount() {
+  //   const  { getData } = this.props;
+  //
+  //   getData().then((itemList) => {
+  //     this.setState({
+  //       itemList
+  //     })
+  //   }).catch(this.onError)
+  // }
   // old
   // renderItems = (arr) => {
   //   return arr.map((person) => {
@@ -43,37 +84,42 @@ export default class ItemList extends Component {
   //   })
   // }
 
-  renderItems = (arr) => {
-    return arr.map((person) => {
-      const label = this.props.children(person)
-      return (
-        <li className="list-group-item"
-            key={person.id}
-            onClick={() => {
-              this.props.onItemSelected(person.id)
-            }}>
-          {/*{person.name}*/}
-          {label}
-
-        </li>
-      )
-    })
-
-  };
 
 
-  render() {
-    const {itemList, loading, error} = this.state;
 
-    const hasData = !(loading || error)
 
-    const isError = error ? <ErrorIndicator/> : null;
-    const spinner = loading ? <Spinner/> : null;
-
-    return (
-      <ul className="item-list list-group">
-        {this.renderItems(itemList)}
-      </ul>
-    );
-  }
-}
+};
+// logic item list
+export default withData(ItemList)
+// const withData = (View, getData) => {
+//   return class extends Component {
+//     state = {
+//       itemList: [],
+//       error: false,
+//       loading: false
+//     };
+//
+//     componentDidMount() {
+//       const  { getData } = this.props;
+//
+//       getData().then((itemList) => {
+//         this.setState({
+//           itemList
+//         })
+//       }).catch(this.onError)
+//     }
+//
+//     render() {
+//       const {itemList, loading, error} = this.state;
+//
+//       const hasData = !(loading || error)
+//
+//       const isError = error ? <ErrorIndicator/> : null;
+//       const spinner = loading ? <Spinner/> : null;
+//
+//       return <View {...this.props} data={itemList}/>
+//     }
+//   }
+// };
+//
+// export default withData(ItemList)
