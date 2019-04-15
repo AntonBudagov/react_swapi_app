@@ -20,7 +20,14 @@ import ErrorBoundary from '../error-boundary';
 import './app.css';
 // import ItemList from "../item-list";
 import PersonDetails from "../person-details";
-
+import {
+  // PersonDetails,
+  // PlanetDetails,
+  // StarshipDetails,
+  PersonList,
+  // PlanetList,
+  // StarshipList
+} from '../sw-components';
 
 export default class App extends Component {
 
@@ -96,19 +103,20 @@ export default class App extends Component {
 
 
           <div className="container">
-            {planet}
+            <PersonList/>
+            {/*{planet}*/}
 
-            <button
-              className="toggle-planet btn btn-warning btn-lg"
-              onClick={this.toggleRandomPlanet}>
-              Toggle Random Planet
-            </button>
-            <ErrorButton/>
-            <Row left={personDetails} right={starShipDetails}/>
-            <PersonPage/>
-            <hr/>
-            <PlanetPage/>
-            <hr/>
+            {/*<button*/}
+              {/*className="toggle-planet btn btn-warning btn-lg"*/}
+              {/*onClick={this.toggleRandomPlanet}>*/}
+              {/*Toggle Random Planet*/}
+            {/*</button>*/}
+            {/*<ErrorButton/>*/}
+            {/*<Row left={personDetails} right={starShipDetails}/>*/}
+            {/*<PersonPage/>*/}
+            {/*<hr/>*/}
+            {/*<PlanetPage/>*/}
+            {/*<hr/>*/}
 
             {/*<div className="row mt-4">*/}
             {/*<div className="col-md-6">*/}

@@ -7,30 +7,30 @@ import React from "react";
 const withData = (View, getData) => {
   return class extends Component {
     state = {
-      itemList: [],
+      data: [],
       error: false,
       loading: false
     };
 
     componentDidMount() {
-      const  { getData } = this.props;
+      // const  { getData } = this.props;
 
-      getData().then((itemList) => {
+      getData().then((data) => {
         this.setState({
-          itemList
+          data
         })
       }).catch(this.onError)
     }
 
     render() {
-      const {itemList, loading, error} = this.state;
+      const {data, loading, error} = this.state;
 
       const hasData = !(loading || error)
 
       const isError = error ? <ErrorIndicator/> : null;
       const spinner = loading ? <Spinner/> : null;
 
-      return <View {...this.props} data={itemList}/>
+      return <View {...this.props} data={data}/>
     }
   }
 };
