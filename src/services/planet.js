@@ -11,6 +11,10 @@ export default class Planet extends AppService {
     return id
   }
 
+  getImage = ({id}) => {
+    return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
+  }
+
   async _read(id) {
     const planet = await this.read(id);
 

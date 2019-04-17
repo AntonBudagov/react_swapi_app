@@ -5,7 +5,7 @@ export default class StarShip extends AppService {
     super(endpoint = '/starships/')
   }
 
-  _extractId = (payload) => {
+  _extractId(payload) {
     const idRegExp = /\/([0-9]*)\/$/;
     const id = payload.url.match(idRegExp)[1];
     return id
@@ -31,6 +31,16 @@ export default class StarShip extends AppService {
       starshipClass: starship.starship_class
       //...
     }
-
+  }
+  _list = async () => {
+    const starshipList = await this.list();
+    return starshipList.map((item) => {
+      return {
+        id: this._extractId(item),
+        name: item.name,
+        costInCredits: item.cost_in_credits,
+        crew: item.crew,
+      }
+    })
   }
 }

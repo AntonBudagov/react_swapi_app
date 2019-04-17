@@ -1,13 +1,13 @@
 import React from 'react';
 
 import './item-list.css';
-import withData from "../hoc-helper/with-data";
+
 // import {withData} from '../hoc-helper';
 
 const ItemList = (props) => {
   console.log(props);
 
-  const {data, onItemSelected, children: renderLabel } = props
+  const {data, onItemSelected, children: renderLabel } = props;
   const items = data.map((item) => {
     // const label = props.children(item)
     const label = renderLabel(item);

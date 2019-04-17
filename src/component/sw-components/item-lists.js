@@ -1,17 +1,22 @@
 import React from 'react';
 import ItemList from '../item-list';
 import { withData } from '../hoc-helper';
+
 import People from '../../services/people';
-import useData  from '../hoc-helper/useData'
+import Planet from '../../services/planet';
+import Starship from '../../services/starship';
 
 const apiPeople = new People();
+const apiPlanet = new Planet();
+const apiStarship = new Starship();
 
 // const {
 //   getAllPeople,
 //   getAllStarships,
 //   getAllPlanets
 // } = swapiService;
-
+// функция высшего порядка
+// мы возращаем новый компонент функцию в качестве children => fn
 const withChildFunction = (Wrapped, fn) => {
   return (props) => {
     return (
@@ -21,45 +26,36 @@ const withChildFunction = (Wrapped, fn) => {
     )
   };
 };
-
-// renderItems = (arr) => {
-//   return arr.map((person) => {
-//     const label = this.props.children(person)
-//     return (
-//       <li className="list-group-item"
-//           key={person.id}
-//           onClick={() => {
-//             this.props.onItemSelected(person.id)
-//           }}>
-//         {/*{person.name}*/}
-//         {label}
-//
-//       </li>
-//     )
-//   })
-//
-// };
-
-const renderName = ({ name }) => <span>{name}</span>;
-const renderModelAndName = ({ model, name}) => <span>{name} ({model})</span>;
-
-// const PersonList = withData(withChildFunction(ItemList, renderName), apiPeople._list);
-const PersonList = withData(
-  (props) => (
-    <ItemList {...props}>
-      {/*{renderName}*/}
-      {({name}) => name }
-    </ItemList>
-  ),
-  apiPeople._list
+// example
+const listWithChildren =  withChildFunction(
+  ItemList,
+  ({name}) =>  <span>{name}</span>
 );
 
-// const PlanetList = () => {};
-//
-// const StarshipList = () => {};
+
+const renderName = ({ name }) => <span>{name}</span>;
+const renderModelAndName = ({ costInCredits, name}) => <span>{name} <b>({costInCredits})</b></span>;
+
+// I variant send child
+const PersonList = withData(ItemList, apiPeople._list); // <PersonList>.....child</PersonList>
+
+// II variant send child
+const PlanetList = withData(withChildFunction(ItemList, renderName), apiPlanet._list);
+const StarshipList = withData(withChildFunction(ItemList, renderModelAndName), apiStarship._list);
+// III variant send child
+// const StarshipList = withData((props) => (<ItemList {...props}>{({name}) => name }</ItemList>), apiStarship._list);
+// const StarshipList = withData(
+//   (props) => (
+//     <ItemList {...props}>
+//       {/*{renderName}*/}
+//       {({name}) => name }
+//     </ItemList>
+//   ),
+//   apiStarship._list
+// );
 
 export {
   PersonList,
-  // PlanetList,
-  // StarshipList
+  PlanetList,
+  StarshipList
 };

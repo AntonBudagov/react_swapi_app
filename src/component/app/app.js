@@ -19,14 +19,14 @@ import ErrorBoundary from '../error-boundary';
 
 import './app.css';
 // import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+// import PersonDetails from "../person-details";
 import {
-  // PersonDetails,
-  // PlanetDetails,
-  // StarshipDetails,
+  PersonDetails,
+  PlanetDetails,
+  StarshipDetails,
   PersonList,
-  // PlanetList,
-  // StarshipList
+  PlanetList,
+  StarshipList
 } from '../sw-components';
 
 export default class App extends Component {
@@ -65,36 +65,36 @@ export default class App extends Component {
 
 
 
-    const personDetails = (
-      <ItemDetails
-        itemId={2}
-        getData={this._servicePerson}
-        getImageUlr={this._servicePerson.getImage}>
-        <Record field={"gender"} label={"Gender"}/>
-        <Record field={"eyeColor"} label={"Eye Color"}/>
-        <Record field={"birthYear"} label={"Birth Year"}/>
-        <Record field={"population"} label={"Population"}/>
-      </ItemDetails>
-      // <PersonDetails personId={11}/>
-    )
-    const starShipDetails = (
-      <ItemDetails
-        itemId={9}
-        getData={this._serviceStarShip}
-        getImageUlr={this._serviceStarShip.getImage}
-
-        // fields={[
-        //     {field: 'gender', label: 'Gender'},
-        //     {field: 'eyeColor', label: 'Eye Color'}]
-        // }
-      >
-        <Record field={"model"} label={"Model"}/>
-        <Record field={"costInCredits"} label={"Cost in Credits"}/>
-        <Record field={"length"} label={"Length"}/>
-        <Record field={"manufacturer"} label={"Manufacturer"}/>
-      </ItemDetails>
-      // <PersonDetails personId={4}/>
-    )
+    // const personDetails = (
+    //   <ItemDetails
+    //     itemId={2}
+    //     getData={this._servicePerson}
+    //     getImageUlr={this._servicePerson.getImage}>
+    //     <Record field={"gender"} label={"Gender"}/>
+    //     <Record field={"eyeColor"} label={"Eye Color"}/>
+    //     <Record field={"birthYear"} label={"Birth Year"}/>
+    //     <Record field={"population"} label={"Population"}/>
+    //   </ItemDetails>
+    //   // <PersonDetails personId={11}/>
+    // )
+    // const starShipDetails = (
+    //   <ItemDetails
+    //     itemId={9}
+    //     getData={this._serviceStarShip}
+    //     getImageUlr={this._serviceStarShip.getImage}
+    //
+    //     // fields={[
+    //     //     {field: 'gender', label: 'Gender'},
+    //     //     {field: 'eyeColor', label: 'Eye Color'}]
+    //     // }
+    //   >
+    //     <Record field={"model"} label={"Model"}/>
+    //     <Record field={"costInCredits"} label={"Cost in Credits"}/>
+    //     <Record field={"length"} label={"Length"}/>
+    //     <Record field={"manufacturer"} label={"Manufacturer"}/>
+    //   </ItemDetails>
+    //   // <PersonDetails personId={4}/>
+    // )
 
     return (
       <ErrorBoundary>
@@ -103,7 +103,16 @@ export default class App extends Component {
 
 
           <div className="container">
-            <PersonList/>
+            <PersonDetails itemId={2}/>
+            <PlanetDetails itemId={3}/>
+            <StarshipDetails itemId={9}/>
+            <PersonList>
+              {({name}) => <b>{name}</b>}
+            </PersonList>
+            <hr/>
+            <PlanetList/>
+            <hr/>
+            <StarshipList/>
             {/*{planet}*/}
 
             {/*<button*/}
