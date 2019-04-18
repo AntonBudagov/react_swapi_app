@@ -32,8 +32,11 @@ import {
 
 import {SwapiServiceProvider} from '../swapi-service-context';
 
-export default class App extends Component {
+// mock server
+import mockApi from '../../services/mock-swapi-service';
 
+export default class App extends Component {
+  // _servicePerson = new mockApi(); example mock service
   _service = new Planet();
   _servicePerson = new Person();
   _serviceStarShip = new StarShip();
