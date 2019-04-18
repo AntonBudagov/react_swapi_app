@@ -20,6 +20,7 @@ import ErrorBoundary from '../error-boundary';
 import './app.css';
 // import ItemList from "../item-list";
 // import PersonDetails from "../person-details";
+
 import {
   PersonDetails,
   PlanetDetails,
@@ -29,11 +30,13 @@ import {
   StarshipList
 } from '../sw-components';
 
+import {SwapiServiceProvider} from '../swapi-service-context';
+
 export default class App extends Component {
 
   _service = new Planet();
   _servicePerson = new Person();
-  _serviceStarShip = new StarShip()
+  _serviceStarShip = new StarShip();
 
   state = {
     showRandomPlanet: false,
@@ -103,7 +106,10 @@ export default class App extends Component {
 
 
           <div className="container">
-            <PersonDetails itemId={2}/>
+            <SwapiServiceProvider value={this._servicePerson}>
+              <PersonDetails itemId={2}/>
+            </SwapiServiceProvider>
+            {/*<PersonDetails itemId={2}/>*/}
             <PlanetDetails itemId={3}/>
             <StarshipDetails itemId={9}/>
             <PersonList>
