@@ -10,11 +10,20 @@ import {
   StarshipList
 } from './item-lists';
 
+// import {
+//   _PersonDetails,
+//
+// } from './person-details';
+
+
 export {
   PersonDetails,
   PlanetDetails,
   StarshipDetails,
   PersonList,
   PlanetList,
-  StarshipList
+  StarshipList,
+  // _PersonDetails
 };
+
+

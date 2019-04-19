@@ -27,8 +27,11 @@ import {
   StarshipDetails,
   PersonList,
   PlanetList,
-  StarshipList
+  StarshipList,
+
 } from '../sw-components';
+
+import  _PersonDetails from '../sw-components/person-details';
 
 import {SwapiServiceProvider} from '../swapi-service-context';
 
@@ -109,6 +112,9 @@ export default class App extends Component {
 
 
           <div className="container">
+            <SwapiServiceProvider value={this._servicePerson}>
+              <_PersonDetails itemId={11}/>
+            </SwapiServiceProvider>
             <SwapiServiceProvider value={this._servicePerson}>
               <PersonDetails itemId={2}/>
             </SwapiServiceProvider>
