@@ -3,8 +3,9 @@ import React from "react";
 
 import withSwapiService from "../hoc-helper/with-swapi-service";
 
-const _PlanetDetails = (props) => {
+const PlanetDetails = (props) => {
   return (
+    // мы можем использовать ...props так как уже в методе mapMethodsToProps возращает то что хотим
     <ItemDetails {...props}>
       <Record field="population" label="Population" />
       <Record field="rotationPeriod" label="Rotation Period" />
@@ -13,7 +14,7 @@ const _PlanetDetails = (props) => {
   )
 };
 
-
+// выбираем какие части сервиса мы хотим передать, и под какими именами
 const mapMethodsToProps = (_service) => {
   return {
     getData: _service,
@@ -21,4 +22,4 @@ const mapMethodsToProps = (_service) => {
   }
 };
 
-export default withSwapiService(_PlanetDetails, mapMethodsToProps);
+export default withSwapiService(PlanetDetails, mapMethodsToProps);

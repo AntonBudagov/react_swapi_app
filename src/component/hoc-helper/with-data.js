@@ -7,13 +7,20 @@ import React from "react";
 const withData = (View, getData) => {
   return class extends Component {
     state = {
-      data: [],
-      error: false,
-      loading: false
+      data: null,
     };
 
+    componentDidUpdate(prevProps) {
+      if (this.props.getData !== prevProps.getData) {
+        this.update();
+      }
+    }
+
     componentDidMount() {
-      // const  { getData } = this.props;
+      this.update();
+    }
+
+    update() {
       if (getData) {
         getData().then((data) => {
           this.setState({
@@ -22,6 +29,7 @@ const withData = (View, getData) => {
         }).catch(this.onError)
       }
       else {
+        // const  { getData } = this.props;
         this.props.getData().then((data) => {
           this.setState({
             data
@@ -31,12 +39,11 @@ const withData = (View, getData) => {
     }
 
     render() {
-      const {data, loading, error} = this.state;
+      const {data} = this.state;
 
-      const hasData = !(loading || error)
-
-      const isError = error ? <ErrorIndicator/> : null;
-      const spinner = loading ? <Spinner/> : null;
+      if (!data) {
+        return <Spinner />;
+      }
 
       return <View {...this.props} data={data}/>
     }

@@ -31,25 +31,39 @@ import {
 
 } from '../sw-components';
 
-import  _PersonDetails from '../sw-components/person-details';
-import  _PlanetDetails from '../sw-components/planet-details';
-
-import {_PersonList}  from '../sw-components/item-lists'
+// import  _PersonDetails from '../sw-components/person-details';
+// import  _PlanetDetails from '../sw-components/planet-details';
+//
+// import {_PersonList}  from '../sw-components/item-lists'
 
 import {SwapiServiceProvider} from '../swapi-service-context';
 
 // mock server
-import mockApi from '../../services/mock-swapi-service';
+import {
+  MockPlanet,
+  MockPeople,
+  MockStarship
+} from '../../services/mock/mock-service';
 
 export default class App extends Component {
-  // _servicePerson = new mockApi(); example mock service
-  _servicePlanet = new Planet();
-  _servicePerson = new Person();
-  _serviceStarShip = new StarShip();
+
+  // _servicePerson = mockPople;
+  // _servicePlanet = mockPlanet;
+  // _serviceStarShip = mockStarship;
+
+
+  // _servicePlanet = new Planet();
+  // _servicePerson = new Person();
+  // _serviceStarShip = new StarShip();
 
   state = {
     showRandomPlanet: false,
-    selectedPerson: 4
+    selectedPerson: 4,
+
+    // dynamic change service
+    _servicePlanet: new Planet(),
+    _servicePerson: new Person(),
+    _serviceStarShip: new StarShip(),
     // hasError: false
   };
 
@@ -59,6 +73,22 @@ export default class App extends Component {
         showRandomPlanet: !state.showRandomPlanet
       }
     });
+  };
+
+  serviceChange = () => {
+    // console.log('change context');
+    this.setState(({_servicePlanet, _servicePerson, _serviceStarShip}) => {
+      const ServicePlanet = _servicePlanet instanceof Planet ? MockPlanet : Planet;
+      const ServicePeople = _servicePerson instanceof Person ? MockPeople : Person;
+      const ServiceStarship = _serviceStarShip instanceof StarShip ? MockStarship : StarShip;
+      // console.log('switched to ', ServicePlanet.name);
+
+      return {
+        _servicePlanet: new ServicePlanet(),
+        _servicePerson: new ServicePeople(),
+        _serviceStarShip: new ServiceStarship()
+      }
+    })
   };
 
 
@@ -111,33 +141,67 @@ export default class App extends Component {
     return (
       <ErrorBoundary>
         <div className="stardb-app">
-          <Header/>
+          <Header onServiceChange={this.serviceChange}/>
 
 
           <div className="container">
-            <SwapiServiceProvider value={this._servicePerson}>
-               <_PersonList/>
-            </SwapiServiceProvider>
 
-            <SwapiServiceProvider value={this._servicePlanet}>
-              <_PlanetDetails itemId={3}/>
+            {/*---------------------------DETAILS--------------------------------------------------------------------*/}
+            <header>
+              <h3>DETAILS</h3>
+            </header>
+            <div>
+              <SwapiServiceProvider value={this.state._servicePerson}>
+                <PersonDetails itemId={11}/>
+              </SwapiServiceProvider>
+              <hr/>
+              <SwapiServiceProvider value={this.state._servicePlanet}>
+                <PlanetDetails itemId={3}/>
+              </SwapiServiceProvider>
+              <hr/>
+              <SwapiServiceProvider value={this.state._serviceStarShip}>
+                <StarshipDetails itemId={9}/>
+              </SwapiServiceProvider>
+            </div>
+            {/*<SwapiServiceProvider value={this._servicePlanet}>*/}
+              {/*<_PlanetDetails itemId={3}/>*/}
+            {/*</SwapiServiceProvider>*/}
+            {/*<SwapiServiceProvider value={this._servicePerson}>*/}
+              {/*<_PersonDetails itemId={11}/>*/}
+            {/*</SwapiServiceProvider>*/}
+            {/*<SwapiServiceProvider value={this._servicePerson}>*/}
+              {/*<PersonDetails itemId={2}/>*/}
+            {/*</SwapiServiceProvider>*/}
+            {/*/!*<PersonDetails itemId={2}/>*!/*/}
+            {/*<PlanetDetails itemId={3}/>*/}
+            {/*<StarshipDetails itemId={9}/>*/}
+            {/*---------------------------DETAILS--------------------------------------------------------------------*/}
+            {/*---------------------------LIST---------------------------*/}
+            {/*<PersonList>*/}
+            {/*{({name}) => <b>{name}</b>}*/}
+            {/*</PersonList>*/}
+            {/*<hr/>*/}
+            {/*<PlanetList/>*/}
+            {/*<hr/>*/}
+            {/*<StarshipList/>*/}
+            <header>
+              <h3>LIST</h3>
+            </header>
+            <SwapiServiceProvider value={this.state._servicePerson}>
+              <PersonList/>
             </SwapiServiceProvider>
-            <SwapiServiceProvider value={this._servicePerson}>
-              <_PersonDetails itemId={11}/>
-            </SwapiServiceProvider>
-            <SwapiServiceProvider value={this._servicePerson}>
-              <PersonDetails itemId={2}/>
-            </SwapiServiceProvider>
-            {/*<PersonDetails itemId={2}/>*/}
-            <PlanetDetails itemId={3}/>
-            <StarshipDetails itemId={9}/>
-            <PersonList>
-              {({name}) => <b>{name}</b>}
-            </PersonList>
             <hr/>
-            <PlanetList/>
+            <SwapiServiceProvider value={this.state._servicePlanet}>
+              <PlanetList/>
+            </SwapiServiceProvider>
             <hr/>
-            <StarshipList/>
+            <SwapiServiceProvider value={this.state._serviceStarShip}>
+              <StarshipList/>
+            </SwapiServiceProvider>
+            {/*---------------------------LIST---------------------------*/}
+
+
+
             {/*{planet}*/}
 
             {/*<button*/}

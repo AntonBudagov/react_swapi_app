@@ -1,10 +1,9 @@
 import ItemDetails, {Record} from "../item-details";
 import React from "react";
 
-// import withSwapiService from '../hoc-helper/with-swapi-service'
 import {withSwapiService} from '../hoc-helper';
 
-const _PersonDetails = ({itemId, _service}) => {
+const PersonDetails = ({itemId, _service}) => {
 
   return (
     <ItemDetails
@@ -19,5 +18,5 @@ const _PersonDetails = ({itemId, _service}) => {
   )
 };
 
-export default withSwapiService(_PersonDetails);
+export default withSwapiService(PersonDetails);
 
