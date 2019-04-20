@@ -44,7 +44,7 @@ const PersonDetails = ({itemId}) => {
             <ItemDetails
               itemId={itemId}
               getData={_service}
-              getImageUlr={_service.getImage}>
+              getImageUrl={_service.getImage}>
               <Record field={"gender"} label={"Gender"}/>
               <Record field={"eyeColor"} label={"Eye Color"}/>
               <Record field={"birthYear"} label={"Birth Year"}/>
@@ -63,7 +63,7 @@ const PlanetDetails = ({itemId}) => {
     <ItemDetails
       itemId={itemId}
       getData={apiPlanet}
-      getImageUlr={apiPlanet.getImage}>
+      getImageUrl={apiPlanet.getImage}>
       <Record field="population" label="Population" />
       <Record field="rotationPeriod" label="Rotation Period" />
       <Record field="diameter" label="Diameter" />
@@ -76,7 +76,7 @@ const StarshipDetails = ({itemId}) => {
     <ItemDetails
       itemId={itemId}
       getData={apiStarship}
-      getImageUlr={apiStarship.getImage}>
+      getImageUrl={apiStarship.getImage}>
       <Record field="model" label="Model" />
       <Record field="length" label="Length" />
       <Record field="costInCredits" label="Cost" />

@@ -10,7 +10,7 @@ const _PersonDetails = ({itemId, _service}) => {
     <ItemDetails
     itemId={itemId}
     getData={_service}
-    getImageUlr={_service.getImage}>
+    getImageUrl={_service.getImage}>
     <Record field={"gender"} label={"Gender"}/>
     <Record field={"eyeColor"} label={"Eye Color"}/>
     <Record field={"birthYear"} label={"Birth Year"}/>
@@ -19,5 +19,5 @@ const _PersonDetails = ({itemId, _service}) => {
   )
 };
 
-export default withSwapiService(_PersonDetails)
+export default withSwapiService(_PersonDetails);
 

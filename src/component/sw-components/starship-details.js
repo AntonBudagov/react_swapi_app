@@ -10,7 +10,7 @@ const StarshipDetails = ({itemId}) => {
     <ItemDetails
       itemId={itemId}
       getData={apiStarship}
-      getImageUlr={apiStarship.getImage}>
+      getImageUrl={apiStarship.getImage}>
       <Record field="model" label="Model" />
       <Record field="length" label="Length" />
       <Record field="costInCredits" label="Cost" />

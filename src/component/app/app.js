@@ -32,6 +32,9 @@ import {
 } from '../sw-components';
 
 import  _PersonDetails from '../sw-components/person-details';
+import  _PlanetDetails from '../sw-components/planet-details';
+
+import {_PersonList}  from '../sw-components/item-lists'
 
 import {SwapiServiceProvider} from '../swapi-service-context';
 
@@ -40,7 +43,7 @@ import mockApi from '../../services/mock-swapi-service';
 
 export default class App extends Component {
   // _servicePerson = new mockApi(); example mock service
-  _service = new Planet();
+  _servicePlanet = new Planet();
   _servicePerson = new Person();
   _serviceStarShip = new StarShip();
 
@@ -112,6 +115,13 @@ export default class App extends Component {
 
 
           <div className="container">
+            <SwapiServiceProvider value={this._servicePerson}>
+               <_PersonList/>
+            </SwapiServiceProvider>
+
+            <SwapiServiceProvider value={this._servicePlanet}>
+              <_PlanetDetails itemId={3}/>
+            </SwapiServiceProvider>
             <SwapiServiceProvider value={this._servicePerson}>
               <_PersonDetails itemId={11}/>
             </SwapiServiceProvider>

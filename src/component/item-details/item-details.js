@@ -47,7 +47,7 @@ export default class ItemDetails extends Component {
   }
 
   updateItem() {
-    const { itemId, getData, getImageUlr, fields } = this.props;
+    const { itemId, getData, getImageUrl, fields } = this.props;
     if (!itemId) {
       return;
     }
@@ -57,7 +57,7 @@ export default class ItemDetails extends Component {
       .then((item) => {
         this.setState({
           item,
-          image: getImageUlr(item)});
+          image: getImageUrl(item)});
       });
   }
 

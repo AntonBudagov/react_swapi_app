@@ -1,6 +1,7 @@
 import React from 'react';
 import ItemList from '../item-list';
-import { withData } from '../hoc-helper';
+import { withData, withSwapiService } from '../hoc-helper';
+
 
 import People from '../../services/people';
 import Planet from '../../services/planet';
@@ -9,6 +10,7 @@ import Starship from '../../services/starship';
 const apiPeople = new People();
 const apiPlanet = new Planet();
 const apiStarship = new Starship();
+
 
 // const {
 //   getAllPeople,
@@ -33,8 +35,24 @@ const listWithChildren =  withChildFunction(
 );
 
 
+
+
 const renderName = ({ name }) => <span>{name}</span>;
 const renderModelAndName = ({ costInCredits, name}) => <span>{name} <b>({costInCredits})</b></span>;
+
+
+const mapPersonMethodToProps = (swapiService) => {
+  return {
+    getData: swapiService._list
+  }
+};
+
+const _PersonList = withSwapiService(
+  withData(
+    withChildFunction(ItemList, renderName)),
+  mapPersonMethodToProps
+  );
+//----------------------------------------------------------------------------------------------------------------------
 
 // I variant send child
 const PersonList = withData(ItemList, apiPeople._list); // <PersonList>.....child</PersonList>
@@ -54,8 +72,12 @@ const StarshipList = withData(withChildFunction(ItemList, renderModelAndName), a
 //   apiStarship._list
 // );
 
+
+
 export {
   PersonList,
   PlanetList,
-  StarshipList
+  StarshipList,
+
+  _PersonList
 };

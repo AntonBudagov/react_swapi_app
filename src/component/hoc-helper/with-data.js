@@ -14,12 +14,20 @@ const withData = (View, getData) => {
 
     componentDidMount() {
       // const  { getData } = this.props;
-
-      getData().then((data) => {
-        this.setState({
-          data
-        })
-      }).catch(this.onError)
+      if (getData) {
+        getData().then((data) => {
+          this.setState({
+            data
+          })
+        }).catch(this.onError)
+      }
+      else {
+        this.props.getData().then((data) => {
+          this.setState({
+            data
+          })
+        }).catch(this.onError)
+      }
     }
 
     render() {
