@@ -37,6 +37,7 @@ export default class ItemDetails extends Component {
   };
 
   componentDidMount() {
+
     this.updateItem();
   }
 
@@ -46,11 +47,12 @@ export default class ItemDetails extends Component {
       this.props.getImageUrl !== prevProps.getImageUrl) {
       this.updateItem();
     }
+    console.log('componentDidUpdate ItemDetails');
   }
 
 
   updateItem() {
-    const { itemId, getData, getImageUrl, fields } = this.props;
+    const { itemId, getData, getImageUrl } = this.props;
     if (!itemId) {
       return;
     }
