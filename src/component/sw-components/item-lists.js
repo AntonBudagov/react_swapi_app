@@ -13,7 +13,7 @@ const apiStarship = new Starship();
 
 // функция высшего порядка
 // мы возращаем новый компонент функцию в качестве children => fn
-const withChildFunction = (Wrapped, fn) => {
+const withChildFunction = (fn) => (Wrapped) => {
   return (props) => {
     return (
       <Wrapped {...props}>
@@ -38,23 +38,26 @@ const mapMethodToProps = (swapiService) => {
   }
 };
 
-const PersonList = withSwapiService(
-  withData(
-    withChildFunction(ItemList, renderName)),
-  mapMethodToProps
-);
+// const PersonList = withSwapiService(
+//   withData(
+//     withChildFunction(ItemList, renderName)),
+//   mapMethodToProps
+// );
 
-const PlanetList = withSwapiService(
-  withData(
-    withChildFunction(ItemList, renderName)),
-  mapMethodToProps
-);
+const PersonList = withSwapiService(mapMethodToProps)(
+                    withData(
+                      withChildFunction(renderName)(
+                        ItemList)));
 
-const StarshipList = withSwapiService(
-  withData(
-    withChildFunction(ItemList, renderName)),
-  mapMethodToProps
-);
+const PlanetList = withSwapiService(mapMethodToProps)(
+                    withData(
+                      withChildFunction(renderName)(
+                        ItemList)));
+
+const StarshipList = withSwapiService(mapMethodToProps)(
+                      withData(
+                        withChildFunction(renderName)(
+                          ItemList)));
 
 // const mapPersonMethodToProps = (swapiService) => {
 //   return {
