@@ -21,4 +21,5 @@ const PersonDetails = ({itemId, _service}) => {
 
 // export default withSwapiService(PersonDetails);
 // первый вызов фуникции = () которая вызовет другую
-export default withSwapiService()(PersonDetails);
+export default withSwapiService(false)(PersonDetails);
+// export default withSwapiService(mapMethodsToProps)(PlanetDetails);
