@@ -8,6 +8,10 @@ import './random-planet.css';
 
 export default class RandomPlanet extends Component {
 
+  static defaultProps = {
+    updateInterval: 11000
+  };
+
   _service = new Planet()
   state = {
     planet: {},
@@ -23,9 +27,10 @@ export default class RandomPlanet extends Component {
   // }
 
   componentDidMount() {
+    const {updateInterval} = this.props;
     this.updatePlanet();
     // setInterval(this.updatePlanet, 1000);
-    this.interval = setInterval(this.updatePlanet, 11000);
+    this.interval = setInterval(this.updatePlanet, updateInterval);
     console.log('componentDidMount');
   }
 
@@ -104,7 +109,12 @@ const PlanetPreview = ({planet}) => {
       </div>
     </React.Fragment>
   )
-}
+};
+
+// RandomPlanet.defaultProps = {
+//   updateInterval: 11000
+// }
+
 
 function Image(props) {
   return <img className="planet-image" src={props.src} alt="planet"/>;

@@ -30,6 +30,10 @@ const ItemList = (props) => {
     </ul>
   );
 };
+
+ItemList.defaultProps = {
+  onItemSelected: () => {}
+};
 // logic item list
 export default ItemList
 // export default withData(ItemList)
