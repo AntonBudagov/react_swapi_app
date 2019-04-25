@@ -39,7 +39,7 @@ export default class App extends Component {
 
 
   state = {
-    showRandomPlanet: false,
+    showRandomPlanet: true,
     selectedPerson: 4,
 
     // dynamic change service
@@ -82,7 +82,7 @@ export default class App extends Component {
       return <ErrorIndicator/>
     }
     const planet = this.state.showRandomPlanet ?
-      <RandomPlanet/> :
+      <RandomPlanet updateInterval={20000}/> :
       null;
 
     return (
