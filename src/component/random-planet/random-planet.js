@@ -14,8 +14,8 @@ export default class RandomPlanet extends Component {
     updateInterval: 11000
   };
 
-  static propsTypes = {
-    updateInterval: PropTypes.number.isRequired
+  static propTypes = {
+    updateInterval: PropTypes.number
   };
   // static propsTypes = {
   //   updateInterval: (props, propName, componentName) => {
@@ -46,7 +46,7 @@ export default class RandomPlanet extends Component {
     const {updateInterval} = this.props;
     this.updatePlanet();
     // setInterval(this.updatePlanet, 1000);
-    this.interval = setInterval(this.updatePlanet, updateInterval);
+    this.interval = setInterval(this.updatePlanet, 20000);
     console.log('componentDidMount');
   }
 
