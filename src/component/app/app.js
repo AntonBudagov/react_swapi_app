@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 
 import Planet from './../../services/planet';
 import Person from './../../services/people';
@@ -16,7 +16,7 @@ import './app.css';
 
 
 // Pages
-import {PeoplePage, PlanetsPage, StarshipsPage} from '../pages';
+import {PeoplePage, PlanetsPage, StarshipsPage, SecretPage, LoginPage} from '../pages';
 // details
 import StarshipDetails from '../sw-components/starship-details'
 
@@ -45,6 +45,8 @@ export default class App extends Component {
 
 
   state = {
+    isLoggedIn: false,
+
     showRandomPlanet: true,
     selectedPerson: 4,
 
@@ -53,6 +55,14 @@ export default class App extends Component {
     _servicePerson: new Person(),
     _serviceStarShip: new StarShip(),
     // hasError: false
+  };
+
+  onLogin = () => {
+    this.setState((state) => {
+      return {
+        isLoggedIn: !state.isLoggedIn
+      }
+    })
   };
 
   toggleRandomPlanet = () => {
@@ -88,7 +98,7 @@ export default class App extends Component {
       return <ErrorIndicator/>
     }
     const planet = this.state.showRandomPlanet ?
-      <RandomPlanet updateInterval={20000}/> :
+      <RandomPlanet updateInterval={20000000}/> :
       null;
 
     return (
@@ -98,11 +108,10 @@ export default class App extends Component {
             <Header onServiceChange={this.serviceChange}/>
 
 
-
             {/*<button*/}
-              {/*className="toggle-planet btn btn-warning btn-lg"*/}
-              {/*onClick={this.toggleRandomPlanet}>*/}
-              {/*Toggle Random Planet*/}
+            {/*className="toggle-planet btn btn-warning btn-lg"*/}
+            {/*onClick={this.toggleRandomPlanet}>*/}
+            {/*Toggle Random Planet*/}
             {/*</button>*/}
             {/*<ErrorButton/>*/}
             <div className="container">
@@ -135,8 +144,25 @@ export default class App extends Component {
                        </SwapiServiceProvider>
                        }/>
 
+                <Route path="/login"
+                       render={() => (
+
+                         <LoginPage
+                           isLoggedIn={this.state.isLoggedIn}
+                           onLogin={this.onLogin}
+                         />
+                       )}/>
+                <Route path="/secret"
+                       render={() => (
+                         <SecretPage isLoggedIn={this.state.isLoggedIn}/>
+                       )}
+                />
+
                 {/*404 or not found path*/}
                 <Route component={NotFound}/>
+                {/*also we can add redirect to main page*/}
+                {/*<Redirect to="/"/>*/}
+
               </Switch>
             </div>
           </div>
