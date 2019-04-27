@@ -26,11 +26,10 @@ import {withRouter} from 'react-router-dom';
 //   }
 // }
 const StarshipsPage = ({history}) => {
+  // history.push(`/starship/${itemId}`);
   return (
     <StarshipList
-      onItemSelected={(itemId) => {
-        history.push(`/starship/${itemId}`);
-    }}/>
+      onItemSelected={(id) => history.push(id)}/>
   )
 };
 export default withRouter(StarshipsPage)

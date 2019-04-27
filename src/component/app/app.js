@@ -111,7 +111,7 @@ export default class App extends Component {
                 {/*exact the same exact={true} */}
                 <Route path="/" exact={true} render={() => <h2> Welcome to Start</h2>}/>
 
-                <Route path="/people" component={() =>
+                <Route path="/people/:id?" component={() =>
                   (<SwapiServiceProvider value={this.state._servicePerson}>
                     <PeoplePage/>
                   </SwapiServiceProvider>)
