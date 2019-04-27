@@ -90,7 +90,7 @@ export default class RandomPlanet extends Component {
     const content = hasData ? <PlanetPreview planet={planet}/> : null;
 
     return (
-      <div className="random-planet jumbotron rounded">
+      <div className="card random-planet jumbotron rounded">
         {spinner}
         {content}
         {isError}
@@ -106,7 +106,7 @@ const PlanetPreview = ({planet}) => {
   return (
     <React.Fragment>
       <Image src={image}/>
-      <div>
+      <div className="ul-list">
         <h4 className="random-planet__title">Planet {name} / #{id}</h4>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">

@@ -1,5 +1,5 @@
-import React, {Component, useState} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Planet from './../../services/planet';
 import Person from './../../services/people';
@@ -16,7 +16,9 @@ import './app.css';
 
 
 // Pages
-import {PeoplePage, PlanetsPage, StarshipsPage} from '../pages'
+import {PeoplePage, PlanetsPage, StarshipsPage} from '../pages';
+// details
+import StarshipDetails from '../sw-components/starship-details'
 
 import {SwapiServiceProvider} from '../swapi-service-context';
 
@@ -27,6 +29,10 @@ import {
   MockStarship
 } from '../../services/mock/mock-service';
 
+
+const NotFound = () => {
+  return <h2>404</h2>
+};
 export default class App extends Component {
 
   // _servicePlanet = new Planet();
@@ -87,46 +93,60 @@ export default class App extends Component {
 
     return (
       <ErrorBoundary>
-        <div className="stardb-app">
-          <Header onServiceChange={this.serviceChange}/>
+        <Router>
+          <div className="stardb-app">
+            <Header onServiceChange={this.serviceChange}/>
 
-          {planet}
 
-          <button
-            className="toggle-planet btn btn-warning btn-lg"
-            onClick={this.toggleRandomPlanet}>
-            Toggle Random Planet
-          </button>
-          <ErrorButton/>
-          <div className="container">
 
-            {/*--------------------------Person--------------------------------------------------------------------*/}
-            <Router>
-              <Route path="/people" component={() =>
-                (<SwapiServiceProvider value={this.state._servicePerson}>
-                  <PeoplePage/>
-                </SwapiServiceProvider>)
-              }/>
+            {/*<button*/}
+              {/*className="toggle-planet btn btn-warning btn-lg"*/}
+              {/*onClick={this.toggleRandomPlanet}>*/}
+              {/*Toggle Random Planet*/}
+            {/*</button>*/}
+            {/*<ErrorButton/>*/}
+            <div className="container">
+              {planet}
+              <Switch>
+                {/*exact the same exact={true} */}
+                <Route path="/" exact={true} render={() => <h2> Welcome to Start</h2>}/>
 
-              <Route path="/planet" component={() =>
-                <SwapiServiceProvider value={this.state._servicePlanet}>
-                  <PlanetsPage/>
-                </SwapiServiceProvider>
-              }/>
+                <Route path="/people" component={() =>
+                  (<SwapiServiceProvider value={this.state._servicePerson}>
+                    <PeoplePage/>
+                  </SwapiServiceProvider>)
+                }/>
 
-              <Route path="/starship" component={() =>
-                <SwapiServiceProvider value={this.state._serviceStarShip}>
-                  <StarshipsPage/>
-                </SwapiServiceProvider>
-              }/>
+                <Route path="/planet" component={() =>
+                  <SwapiServiceProvider value={this.state._servicePlanet}>
+                    <PlanetsPage/>
+                  </SwapiServiceProvider>
+                }/>
 
-            </Router>
+                <Route path="/starship" exact component={() =>
+                  <SwapiServiceProvider value={this.state._serviceStarShip}>
+                    <StarshipsPage/>
+                  </SwapiServiceProvider>
+                }/>
+                {/*details*/}
+                <Route path="/starship/:id" exact
+                       render={({match}) => <SwapiServiceProvider value={this.state._serviceStarShip}>
+                         <StarshipDetails itemId={match.params.id}/>
+                       </SwapiServiceProvider>
+                       }/>
+
+                {/*404 or not found path*/}
+                <Route component={NotFound}/>
+              </Switch>
+            </div>
           </div>
-        </div>
+
+        </Router>
       </ErrorBoundary>
     );
   }
 }
+
 // const App = () => {
 // const [showRandomPlanet, toggleRandomPlanet] = useState(false);
 //   return (
