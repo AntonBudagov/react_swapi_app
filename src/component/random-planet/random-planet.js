@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
+
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator'
 import Planet from './../../services/planet';
@@ -7,6 +9,24 @@ import './random-planet.css';
 
 
 export default class RandomPlanet extends Component {
+
+  static defaultProps = {
+    updateInterval: 11000
+  };
+
+  static propTypes = {
+    updateInterval: PropTypes.number
+  };
+  // static propsTypes = {
+  //   updateInterval: (props, propName, componentName) => {
+  //     const value = props[propName];
+  //
+  //     if (typeof value === 'number' && isNaN(value)) {
+  //      return null
+  //     }
+  //     return new TypeError(`${componentName}: ${propName} must be number`)
+  //   }
+  // };
 
   _service = new Planet()
   state = {
@@ -23,9 +43,10 @@ export default class RandomPlanet extends Component {
   // }
 
   componentDidMount() {
+    const {updateInterval} = this.props;
     this.updatePlanet();
     // setInterval(this.updatePlanet, 1000);
-    this.interval = setInterval(this.updatePlanet, 11000);
+    this.interval = setInterval(this.updatePlanet, 20000);
     console.log('componentDidMount');
   }
 
@@ -69,7 +90,7 @@ export default class RandomPlanet extends Component {
     const content = hasData ? <PlanetPreview planet={planet}/> : null;
 
     return (
-      <div className="random-planet jumbotron rounded">
+      <div className="card random-planet jumbotron rounded">
         {spinner}
         {content}
         {isError}
@@ -85,7 +106,7 @@ const PlanetPreview = ({planet}) => {
   return (
     <React.Fragment>
       <Image src={image}/>
-      <div>
+      <div className="ul-list">
         <h4 className="random-planet__title">Planet {name} / #{id}</h4>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
@@ -104,7 +125,12 @@ const PlanetPreview = ({planet}) => {
       </div>
     </React.Fragment>
   )
-}
+};
+
+// RandomPlanet.defaultProps = {
+//   updateInterval: 11000
+// }
+
 
 function Image(props) {
   return <img className="planet-image" src={props.src} alt="planet"/>;

@@ -1,5 +1,5 @@
-import React, {Component, useState} from 'react';
-
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 
 import Planet from './../../services/planet';
 import Person from './../../services/people';
@@ -7,47 +7,62 @@ import StarShip from './../../services/starship';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import PersonPage from '../people-page';
-import PlanetPage from '../planet-page';
-// import ItemList from '../item-list';
-// import PersonDetails from '../person-details';
-import ItemDetails, {Record} from '../item-details'; //common
 
 import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator';
 import ErrorBoundary from '../error-boundary';
 
 import './app.css';
-// import ItemList from "../item-list";
-// import PersonDetails from "../person-details";
 
-import {
-  PersonDetails,
-  PlanetDetails,
-  StarshipDetails,
-  PersonList,
-  PlanetList,
-  StarshipList,
 
-} from '../sw-components';
-
-import  _PersonDetails from '../sw-components/person-details';
+// Pages
+import {PeoplePage, PlanetsPage, StarshipsPage, SecretPage, LoginPage} from '../pages';
+// details
+import StarshipDetails from '../sw-components/starship-details'
 
 import {SwapiServiceProvider} from '../swapi-service-context';
 
 // mock server
-import mockApi from '../../services/mock-swapi-service';
+import {
+  MockPlanet,
+  MockPeople,
+  MockStarship
+} from '../../services/mock/mock-service';
 
+
+const NotFound = () => {
+  return <h2>404</h2>
+};
 export default class App extends Component {
-  // _servicePerson = new mockApi(); example mock service
-  _service = new Planet();
-  _servicePerson = new Person();
-  _serviceStarShip = new StarShip();
+
+  // _servicePlanet = new Planet();
+  // _servicePerson = new Person();
+  // _serviceStarShip = new StarShip();
+  // mock service
+  // _servicePerson = mockPople;
+  // _servicePlanet = mockPlanet;
+  // _serviceStarShip = mockStarship;
+
 
   state = {
-    showRandomPlanet: false,
-    selectedPerson: 4
+    isLoggedIn: false,
+
+    showRandomPlanet: true,
+    selectedPerson: 4,
+
+    // dynamic change service
+    _servicePlanet: new Planet(),
+    _servicePerson: new Person(),
+    _serviceStarShip: new StarShip(),
     // hasError: false
+  };
+
+  onLogin = () => {
+    this.setState((state) => {
+      return {
+        isLoggedIn: !state.isLoggedIn
+      }
+    })
   };
 
   toggleRandomPlanet = () => {
@@ -56,6 +71,20 @@ export default class App extends Component {
         showRandomPlanet: !state.showRandomPlanet
       }
     });
+  };
+
+  serviceChange = () => {
+    this.setState(({_servicePlanet, _servicePerson, _serviceStarShip}) => {
+      const ServicePlanet = _servicePlanet instanceof Planet ? MockPlanet : Planet;
+      const ServicePeople = _servicePerson instanceof Person ? MockPeople : Person;
+      const ServiceStarship = _serviceStarShip instanceof StarShip ? MockStarship : StarShip;
+      // console.log('switched to ', ServicePlanet.name);
+      return {
+        _servicePlanet: new ServicePlanet(),
+        _servicePerson: new ServicePeople(),
+        _serviceStarShip: new ServiceStarship()
+      }
+    })
   };
 
 
@@ -69,105 +98,81 @@ export default class App extends Component {
       return <ErrorIndicator/>
     }
     const planet = this.state.showRandomPlanet ?
-      <RandomPlanet/> :
+      <RandomPlanet updateInterval={20000000}/> :
       null;
-
-
-
-    // const personDetails = (
-    //   <ItemDetails
-    //     itemId={2}
-    //     getData={this._servicePerson}
-    //     getImageUlr={this._servicePerson.getImage}>
-    //     <Record field={"gender"} label={"Gender"}/>
-    //     <Record field={"eyeColor"} label={"Eye Color"}/>
-    //     <Record field={"birthYear"} label={"Birth Year"}/>
-    //     <Record field={"population"} label={"Population"}/>
-    //   </ItemDetails>
-    //   // <PersonDetails personId={11}/>
-    // )
-    // const starShipDetails = (
-    //   <ItemDetails
-    //     itemId={9}
-    //     getData={this._serviceStarShip}
-    //     getImageUlr={this._serviceStarShip.getImage}
-    //
-    //     // fields={[
-    //     //     {field: 'gender', label: 'Gender'},
-    //     //     {field: 'eyeColor', label: 'Eye Color'}]
-    //     // }
-    //   >
-    //     <Record field={"model"} label={"Model"}/>
-    //     <Record field={"costInCredits"} label={"Cost in Credits"}/>
-    //     <Record field={"length"} label={"Length"}/>
-    //     <Record field={"manufacturer"} label={"Manufacturer"}/>
-    //   </ItemDetails>
-    //   // <PersonDetails personId={4}/>
-    // )
 
     return (
       <ErrorBoundary>
-        <div className="stardb-app">
-          <Header/>
+        <Router>
+          <div className="stardb-app">
+            <Header onServiceChange={this.serviceChange}/>
 
-
-          <div className="container">
-            <SwapiServiceProvider value={this._servicePerson}>
-              <_PersonDetails itemId={11}/>
-            </SwapiServiceProvider>
-            <SwapiServiceProvider value={this._servicePerson}>
-              <PersonDetails itemId={2}/>
-            </SwapiServiceProvider>
-            {/*<PersonDetails itemId={2}/>*/}
-            <PlanetDetails itemId={3}/>
-            <StarshipDetails itemId={9}/>
-            <PersonList>
-              {({name}) => <b>{name}</b>}
-            </PersonList>
-            <hr/>
-            <PlanetList/>
-            <hr/>
-            <StarshipList/>
-            {/*{planet}*/}
 
             {/*<button*/}
-              {/*className="toggle-planet btn btn-warning btn-lg"*/}
-              {/*onClick={this.toggleRandomPlanet}>*/}
-              {/*Toggle Random Planet*/}
+            {/*className="toggle-planet btn btn-warning btn-lg"*/}
+            {/*onClick={this.toggleRandomPlanet}>*/}
+            {/*Toggle Random Planet*/}
             {/*</button>*/}
             {/*<ErrorButton/>*/}
-            {/*<Row left={personDetails} right={starShipDetails}/>*/}
-            {/*<PersonPage/>*/}
-            {/*<hr/>*/}
-            {/*<PlanetPage/>*/}
-            {/*<hr/>*/}
+            <div className="container">
+              {planet}
+              <Switch>
+                {/*exact the same exact={true} */}
+                <Route path="/" exact={true} render={() => <h2> Welcome to Start</h2>}/>
 
-            {/*<div className="row mt-4">*/}
-            {/*<div className="col-md-6">*/}
-            {/*<h1>Planet</h1>*/}
-            {/*<ItemList*/}
-            {/*getData={this._service._list}*/}
-            {/*/>*/}
-            {/*</div>*/}
-            {/*</div>*/}
+                <Route path="/people/:id?" component={() =>
+                  (<SwapiServiceProvider value={this.state._servicePerson}>
+                    <PeoplePage/>
+                  </SwapiServiceProvider>)
+                }/>
+
+                <Route path="/planet" component={() =>
+                  <SwapiServiceProvider value={this.state._servicePlanet}>
+                    <PlanetsPage/>
+                  </SwapiServiceProvider>
+                }/>
+
+                <Route path="/starship" exact component={() =>
+                  <SwapiServiceProvider value={this.state._serviceStarShip}>
+                    <StarshipsPage/>
+                  </SwapiServiceProvider>
+                }/>
+                {/*details*/}
+                <Route path="/starship/:id" exact
+                       render={({match}) => <SwapiServiceProvider value={this.state._serviceStarShip}>
+                         <StarshipDetails itemId={match.params.id}/>
+                       </SwapiServiceProvider>
+                       }/>
+
+                <Route path="/login"
+                       render={() => (
+
+                         <LoginPage
+                           isLoggedIn={this.state.isLoggedIn}
+                           onLogin={this.onLogin}
+                         />
+                       )}/>
+                <Route path="/secret"
+                       render={() => (
+                         <SecretPage isLoggedIn={this.state.isLoggedIn}/>
+                       )}
+                />
+
+                {/*404 or not found path*/}
+                <Route component={NotFound}/>
+                {/*also we can add redirect to main page*/}
+                {/*<Redirect to="/"/>*/}
+
+              </Switch>
+            </div>
           </div>
-        </div>
+
+        </Router>
       </ErrorBoundary>
     );
   }
 }
-const Row = ({left, right}) => {
-  return (
-    <div className="row mt-4 ">
-      <div className="col-md-6">
-        {left}
-      </div>
-      <div className="col-md-6 ">
-        {right}
-      </div>
-    </div>
-  );
-};
+
 // const App = () => {
 // const [showRandomPlanet, toggleRandomPlanet] = useState(false);
 //   return (

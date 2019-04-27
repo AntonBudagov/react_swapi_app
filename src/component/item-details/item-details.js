@@ -37,17 +37,22 @@ export default class ItemDetails extends Component {
   };
 
   componentDidMount() {
+
     this.updateItem();
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.itemId !== prevProps.itemId) {
+    if (this.props.itemId !== prevProps.itemId ||
+      this.props.getData !== prevProps.getData ||
+      this.props.getImageUrl !== prevProps.getImageUrl) {
       this.updateItem();
     }
+    console.log('componentDidUpdate ItemDetails');
   }
 
+
   updateItem() {
-    const { itemId, getData, getImageUlr, fields } = this.props;
+    const { itemId, getData, getImageUrl } = this.props;
     if (!itemId) {
       return;
     }
@@ -57,7 +62,7 @@ export default class ItemDetails extends Component {
       .then((item) => {
         this.setState({
           item,
-          image: getImageUlr(item)});
+          image: getImageUrl(item)});
       });
   }
 

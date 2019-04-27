@@ -1,17 +1,12 @@
 import ItemDetails, {Record} from "../item-details";
 import React from "react";
 
-import Planet from '../../services/planet';
+import {withSwapiService} from '../hoc-helper';
 
-const apiPlanet = new Planet();
-
-//
-const PlanetDetails = ({itemId}) => {
+const PlanetDetails = (props) => {
   return (
-    <ItemDetails
-      itemId={itemId}
-      getData={apiPlanet}
-      getImageUlr={apiPlanet.getImage}>
+    // мы можем использовать ...props так как уже в методе mapMethodsToProps возращает то что хотим
+    <ItemDetails {...props}>
       <Record field="population" label="Population" />
       <Record field="rotationPeriod" label="Rotation Period" />
       <Record field="diameter" label="Diameter" />
@@ -19,4 +14,13 @@ const PlanetDetails = ({itemId}) => {
   )
 };
 
-export {PlanetDetails}
+// выбираем какие части сервиса мы хотим передать, и под какими именами
+const mapMethodsToProps = (_service) => {
+  return {
+    getData: _service,
+    getImageUrl: _service.getImage
+  }
+};
+
+// export default withSwapiService(PlanetDetails, mapMethodsToProps);
+export default withSwapiService(mapMethodsToProps)(PlanetDetails);
