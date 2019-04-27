@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import Planet from './../../services/planet';
 import Person from './../../services/people';
@@ -101,20 +101,26 @@ export default class App extends Component {
           <div className="container">
 
             {/*--------------------------Person--------------------------------------------------------------------*/}
-            <header>
-              <h3>Person</h3>
-            </header>
-            <SwapiServiceProvider value={this.state._servicePerson}>
-              <PeoplePage/>
-            </SwapiServiceProvider>
-            <hr/>
-            <SwapiServiceProvider value={this.state._servicePlanet}>
-              <PlanetsPage/>
-            </SwapiServiceProvider>
-            <hr/>
-            <SwapiServiceProvider value={this.state._serviceStarShip}>
-              <StarshipsPage/>
-            </SwapiServiceProvider>
+            <Router>
+              <Route path="/people" component={() =>
+                (<SwapiServiceProvider value={this.state._servicePerson}>
+                  <PeoplePage/>
+                </SwapiServiceProvider>)
+              }/>
+
+              <Route path="/planet" component={() =>
+                <SwapiServiceProvider value={this.state._servicePlanet}>
+                  <PlanetsPage/>
+                </SwapiServiceProvider>
+              }/>
+
+              <Route path="/starship" component={() =>
+                <SwapiServiceProvider value={this.state._serviceStarShip}>
+                  <StarshipsPage/>
+                </SwapiServiceProvider>
+              }/>
+
+            </Router>
           </div>
         </div>
       </ErrorBoundary>
