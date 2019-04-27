@@ -1,35 +1,38 @@
 .random-planet {
-  display: flex;
-  padding: 1rem;
-  background: #1d1e1f;
-  height: 220px;
+    display: flex;
+    padding: 1rem;
+    height: 220px;
+    flex-wrap: wrap;
+}
+.ul-list {
+    width: 80%;
+}
+.random-planet__title {
+    color: #4d4e4f;
+    font-size: 2.25rem;
+    font-weight: 300;
+    line-height: 1.1666666667;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
 }
 
-.random-planet__title {
-  color: #4d4e4f;
-  font-size: 2.25rem;
-  font-weight: 300;
-  line-height: 1.1666666667;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  word-wrap: normal;
-}
 .random-planet .planet-image {
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
-  margin-right: 1rem;
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    margin-right: 1rem;
 }
 
 .random-planet .list-group {
-  margin: 1rem 0 0 1rem;
+    margin: 1rem 0 0 1rem;
 }
 
 .random-planet .list-group-item {
-  padding: .25rem;
+    padding: .25rem;
 }
 
 .random-planet .list-group-item .term {
-  margin-right: .5rem;
+    margin-right: .5rem;
 }

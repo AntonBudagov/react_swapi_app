@@ -1,16 +1,15 @@
 import ItemDetails, {Record} from "../item-details";
 import React from "react";
 
-// import withSwapiService from '../hoc-helper/with-swapi-service'
 import {withSwapiService} from '../hoc-helper';
 
-const _PersonDetails = ({itemId, _service}) => {
+const PersonDetails = ({itemId, _service}) => {
 
   return (
     <ItemDetails
     itemId={itemId}
     getData={_service}
-    getImageUlr={_service.getImage}>
+    getImageUrl={_service.getImage}>
     <Record field={"gender"} label={"Gender"}/>
     <Record field={"eyeColor"} label={"Eye Color"}/>
     <Record field={"birthYear"} label={"Birth Year"}/>
@@ -19,5 +18,8 @@ const _PersonDetails = ({itemId, _service}) => {
   )
 };
 
-export default withSwapiService(_PersonDetails)
 
+// export default withSwapiService(PersonDetails);
+// первый вызов фуникции = () которая вызовет другую
+export default withSwapiService(false)(PersonDetails);
+// export default withSwapiService(mapMethodsToProps)(PlanetDetails);

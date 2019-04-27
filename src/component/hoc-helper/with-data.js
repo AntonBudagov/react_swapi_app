@@ -7,28 +7,57 @@ import React from "react";
 const withData = (View, getData) => {
   return class extends Component {
     state = {
-      data: [],
-      error: false,
-      loading: false
+      data: null,
+      error: false
     };
 
-    componentDidMount() {
-      // const  { getData } = this.props;
+    componentDidUpdate(prevProps) {
+      if (this.props.getData !== prevProps.getData) {
+        this.update();
+      }
+    }
 
-      getData().then((data) => {
+    componentDidMount() {
+      this.update();
+    }
+
+    update() {
+      if (getData) {
+        getData().then((data) => {
+          this.setState({
+            data
+          })
+        }).catch(this.onError)
+      }
+      else {
+        // const  { getData } = this.props;
         this.setState({
-          data
+          error: false
+        });
+
+        this.props.getData().then((data) => {
+          this.setState({
+            data
+          })
+        }).catch(() => {
+          this.setState({
+            error: false,
+            data: false
+          });
         })
-      }).catch(this.onError)
+      }
     }
 
     render() {
-      const {data, loading, error} = this.state;
+      const {data, error} = this.state;
 
-      const hasData = !(loading || error)
+      if (!data) {
+        return <Spinner />;
+      }
 
-      const isError = error ? <ErrorIndicator/> : null;
-      const spinner = loading ? <Spinner/> : null;
+      if (error) {
+        return  <ErrorIndicator/>
+      }
 
       return <View {...this.props} data={data}/>
     }
