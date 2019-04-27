@@ -3,24 +3,24 @@ import ItemList from '../item-list';
 import {withData, withSwapiService, withChildFunction, compose} from '../hoc-helper';
 
 
-import People from '../../services/people';
-import Planet from '../../services/planet';
-import Starship from '../../services/starship';
+// import People from '../../services/people';
+// import Planet from '../../services/planet';
+// import Starship from '../../services/starship';
 
-const apiPeople = new People();
-const apiPlanet = new Planet();
-const apiStarship = new Starship();
+// const apiPeople = new People();
+// const apiPlanet = new Planet();
+// const apiStarship = new Starship();
 
 
 // example
-const listWithChildren = withChildFunction(
-  ItemList,
-  ({name}) => <span>{name}</span>
-);
+// const listWithChildren = withChildFunction(
+//   ItemList,
+//   ({name}) => <span>{name}</span>
+// );
 
 
 const renderName = ({name}) => <span>{name}</span>;
-const renderModelAndName = ({costInCredits, name}) => <span>{name} <b>({costInCredits})</b></span>;
+// const renderModelAndName = ({costInCredits, name}) => <span>{name} <b>({costInCredits})</b></span>;
 
 const mapMethodToProps = (swapiService) => {
   return {

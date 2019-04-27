@@ -33,6 +33,7 @@ import {
 const NotFound = () => {
   return <h2>404</h2>
 };
+
 export default class App extends Component {
 
   // _servicePlanet = new Planet();
