@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 
+import {connect} from 'react-redux'
+
 import Planet from './../../services/planet';
 import Person from './../../services/people';
 import StarShip from './../../services/starship';
@@ -14,6 +16,7 @@ import ErrorBoundary from '../error-boundary';
 
 import './app.css';
 
+import actions from '../../redux/actions';
 
 // Pages
 import {PeoplePage, PlanetsPage, StarshipsPage, SecretPage, LoginPage} from '../pages';
@@ -34,7 +37,7 @@ const NotFound = () => {
   return <h2>404</h2>
 };
 
-export default class App extends Component {
+class App extends Component {
 
   // _servicePlanet = new Planet();
   // _servicePerson = new Person();
@@ -48,7 +51,7 @@ export default class App extends Component {
   state = {
     isLoggedIn: false,
 
-    showRandomPlanet: true,
+    // showRandomPlanet: true,
     selectedPerson: 4,
 
     // dynamic change service
@@ -66,13 +69,13 @@ export default class App extends Component {
     })
   };
 
-  toggleRandomPlanet = () => {
-    this.setState((state) => {
-      return {
-        showRandomPlanet: !state.showRandomPlanet
-      }
-    });
-  };
+  // toggleRandomPlanet = () => {
+  //   this.setState((state) => {
+  //     return {
+  //       showRandomPlanet: !state.showRandomPlanet
+  //     }
+  //   });
+  // };
 
   serviceChange = () => {
     this.setState(({_servicePlanet, _servicePerson, _serviceStarShip}) => {
@@ -95,10 +98,14 @@ export default class App extends Component {
   }
 
   render() {
+    console.log(this.props);
     if (this.state.hasError) {
       return <ErrorIndicator/>
     }
-    const planet = this.state.showRandomPlanet ?
+    // const planet = this.state.showRandomPlanet ?
+    //   <RandomPlanet updateInterval={20000000}/> :
+    //   null;
+    const planet = this.props.showRandomPlanet ?
       <RandomPlanet updateInterval={20000000}/> :
       null;
 
@@ -109,11 +116,11 @@ export default class App extends Component {
             <Header onServiceChange={this.serviceChange}/>
 
 
-            {/*<button*/}
-            {/*className="toggle-planet btn btn-warning btn-lg"*/}
-            {/*onClick={this.toggleRandomPlanet}>*/}
-            {/*Toggle Random Planet*/}
-            {/*</button>*/}
+            <button
+            className="toggle-planet btn btn-warning btn-lg"
+            onClick={this.props.toggleRandomPlanet}>
+            Toggle Random Planet
+            </button>
             {/*<ErrorButton/>*/}
             <div className="container">
               {planet}
@@ -173,24 +180,11 @@ export default class App extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({showRandomPlanet: state.showRandomPlanet});
 
-// const App = () => {
-// const [showRandomPlanet, toggleRandomPlanet] = useState(false);
-//   return (
-//     <div>
-//       <Header />
-//       <RandomPlanet />
-//
-//       <div className="row mb2">
-//         <div className="col-md-6">
-//           <ItemList />
-//         </div>
-//         <div className="col-md-6">
-//           <PersonDetails />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-//
-// export default App;
+const mapDispatchToProps = (dispatch) => ({
+  toggleRandomPlanet:() => dispatch(actions.toggleRandomPlanet())
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

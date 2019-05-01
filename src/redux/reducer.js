@@ -4,12 +4,14 @@ const initState = {
   showRandomPlanet: false
 };
 
-const reducer = (state = true, action) => {
+const reducer = (state = initState, action) => {
   switch (action.type) {
     case actions.RANDOM_PLANET:
       return {
-        ...state, showRandomPlanet: [state.showRandomPlanet, action.showRandomPlanet]
-      }
+        ...state, showRandomPlanet: !state.showRandomPlanet
+      };
+    default:
+      return state;
   }
 };
 
