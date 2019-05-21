@@ -41,7 +41,7 @@ const withData = (View, getData) => {
           })
         }).catch(() => {
           this.setState({
-            error: false,
+            error: true,
             data: false
           });
         })

@@ -9,7 +9,7 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 
 import ErrorButton from '../error-button';
-import ErrorIndicator from '../error-indicator';
+
 import ErrorBoundary from '../error-boundary';
 
 import './app.css';
@@ -53,8 +53,7 @@ export default class App extends Component {
     // dynamic change service
     _servicePlanet: new Planet(),
     _servicePerson: new Person(),
-    _serviceStarShip: new StarShip(),
-    // hasError: false
+    _serviceStarShip: new StarShip()
   };
 
   onLogin = () => {
@@ -94,9 +93,6 @@ export default class App extends Component {
   }
 
   render() {
-    if (this.state.hasError) {
-      return <ErrorIndicator/>
-    }
     const planet = this.state.showRandomPlanet ?
       <RandomPlanet updateInterval={20000000}/> :
       null;
@@ -104,16 +100,16 @@ export default class App extends Component {
     return (
       <ErrorBoundary>
         <Router>
-          <div className="stardb-app">
+          <div className="stardb-app container">
             <Header onServiceChange={this.serviceChange}/>
 
 
-            {/*<button*/}
-            {/*className="toggle-planet btn btn-warning btn-lg"*/}
-            {/*onClick={this.toggleRandomPlanet}>*/}
-            {/*Toggle Random Planet*/}
-            {/*</button>*/}
-            {/*<ErrorButton/>*/}
+            <button
+            className="toggle-planet btn btn-warning btn-lg"
+            onClick={this.toggleRandomPlanet}>
+            Toggle Random Planet
+            </button>
+            <ErrorButton/>
             <div className="container">
               {planet}
               <Switch>
