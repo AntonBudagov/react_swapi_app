@@ -17,12 +17,12 @@ const RandomPlanet = (props) => {
     const {updateInterval} = props;
 
 
-    const unMountHandler = () => {
-        setPlanet(null);
-        setError(null);
-        setLoading(null);
+    // const unMountHandler = () => {
+    //     setPlanet(null);
+    //     setError(null);
+    //     setLoading(null);
+    // };
 
-    };
     const onPlanetLoaded = (planet) => {
         setPlanet(planet);
         setError(false);
@@ -34,6 +34,7 @@ const RandomPlanet = (props) => {
     };
 
     const updatePlanet = () => {
+
         const id = Math.floor(Math.random() * 55 + 2);
         api._read(id)
             .then(onPlanetLoaded)
@@ -42,10 +43,9 @@ const RandomPlanet = (props) => {
 
 
     useEffect(() => {
-        setLoading(true);
         updatePlanet();
-        // let interval = setInterval(updatePlanet, updateInterval);
-        // return () => clearInterval(interval);
+        let interval = setInterval(updatePlanet, updateInterval);
+        return () => clearInterval(interval);
         // return unMountHandler
     }, [setPlanet]);
 

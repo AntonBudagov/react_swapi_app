@@ -47,7 +47,7 @@ export default class App extends Component {
   state = {
     isLoggedIn: false,
 
-    showRandomPlanet: true,
+    showRandomPlanet: false,
     selectedPerson: 4,
 
     // dynamic change service
@@ -94,7 +94,7 @@ export default class App extends Component {
 
   render() {
     const planet = this.state.showRandomPlanet ?
-      <RandomPlanet updateInterval={20000000}/> :
+      <RandomPlanet updateInterval={20000}/> :
       null;
 
     return (

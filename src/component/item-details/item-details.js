@@ -1,84 +1,93 @@
 import React, { Component } from 'react';
 
 import ErrorButton from '../error-button/error-button';
-
+import Spinner from '../spinner';
 
 import './item-details.css';
 
 export const Record = ({item, field, label}) => {
-  return (
-    <li className="list-group-item">
-      <span className="term">{label}</span>
-      <span>{item[field]}</span>
-    </li>
-  )
+    return (
+        <li className="list-group-item">
+            <span className="term">{label}</span>
+            <span>{item[field]}</span>
+        </li>
+    )
 };
 
 
 export default class ItemDetails extends Component {
 
-  state = {
-    item: null,
-    image: null
-  };
+    state = {
+        item: null,
+        image: null,
+        loaded: null,
+    };
 
-  componentDidMount() {
+    componentDidMount() {
 
-    this.updateItem();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.itemId !== prevProps.itemId ||
-      this.props.getData !== prevProps.getData ||
-      this.props.getImageUrl !== prevProps.getImageUrl) {
-      this.updateItem();
+        this.updateItem();
     }
-    console.log('componentDidUpdate ItemDetails');
-  }
 
-
-  updateItem() {
-    const { itemId, getData, getImageUrl } = this.props;
-    if (!itemId) {
-      return;
+    componentDidUpdate(prevProps) {
+        if (this.props.itemId !== prevProps.itemId ||
+            this.props.getData !== prevProps.getData ||
+            this.props.getImageUrl !== prevProps.getImageUrl) {
+            this.updateItem();
+        }
+        console.log('componentDidUpdate ItemDetails');
     }
 
 
-    getData._read(itemId)
-      .then((item) => {
+    updateItem() {
+        const {itemId, getData, getImageUrl} = this.props;
+        if (!itemId) {
+            return;
+        }
         this.setState({
-          item,
-          image: getImageUrl(item)});
-      });
-  }
+            loaded: true
+        });
 
-
-  render() {
-
-    const { item, image } = this.state;
-    if (!item) {
-      return <span>Select a item from a list</span>;
+        getData._read(itemId)
+            .then((item) => {
+                this.setState({
+                    item,
+                    image: getImageUrl(item),
+                    loaded: false
+                });
+            });
     }
 
-    const { name } = item;
-    return (
-      <div className="item-details card">
-        <img className="item-image"
-          src={image}
-          alt="item"/>
 
-        <div className="card-body">
-          <h4>{name}</h4>
-          <ul className="list-group list-group-flush">
-            {
-             React.Children.map(this.props.children, (child) => {
-               return React.cloneElement(child, {item})
-             })
-            }
-          </ul>
-          <ErrorButton/>
-        </div>
-      </div>
-    );
-  }
+    render() {
+
+        const {item, image, loaded} = this.state;
+        if (!item) {
+            return <span>Select a item from a list</span>;
+        }
+
+        if (loaded && item) {
+            return <Spinner/>;
+        }
+
+        const {name} = item;
+        return (
+            <div className="item-details card">
+                <img className="item-image"
+                     src={image}
+                     alt="item"/>
+
+                <div className="card-body">
+                    <h4>{name}</h4>
+                    <ul className="list-group list-group-flush">
+                        {
+                            React.Children.map(this.props.children, (child) => {
+                                return React.cloneElement(child, {item})
+                            })
+                        }
+                    </ul>
+                    <ErrorButton/>
+                </div>
+            </div>
+        );
+    }
 }
