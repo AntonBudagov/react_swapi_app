@@ -13,8 +13,6 @@ const SecretPage = ({ isLoggedIn }) => {
     );
   }
 
-  // return <p>You should not see this!!!!</p>
-
   return <Redirect to='/login'/>
 };
 

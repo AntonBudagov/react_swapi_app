@@ -26,29 +26,3 @@ const withSwapiService = (mapMethodsToProps) => (Wrapped) => {
 };
 
 export default withSwapiService;
-
-
-// const withSwapiOld = (Wrapped, mapMethodsToProps) => {
-//
-//   return (props) => {
-//     return (<SwapiServiceConsumer>
-//       {
-//         (_service) => {
-//           if (mapMethodsToProps) {
-//             const _serviceProps = mapMethodsToProps(_service);
-//             return (
-//               <Wrapped {...props}  {..._serviceProps}/>
-//             )
-//           }
-//           return (
-//             <Wrapped {...props} _service={_service}/>
-//           )
-//         }
-//       }
-//     </SwapiServiceConsumer>)
-//   }
-//
-//
-// };
-//
-// export default withSwapiOld;

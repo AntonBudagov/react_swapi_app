@@ -15,7 +15,6 @@ const LoginPage = ({isLoggedIn, onLogin}) => {
         Login
       </button>
     </div>
-
   )
 };
 

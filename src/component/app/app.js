@@ -19,9 +19,9 @@ import './app.css';
 import actions from '../../redux/actions';
 
 // Pages
-import {PeoplePage, PlanetsPage, StarshipsPage, SecretPage, LoginPage} from '../pages';
+import {PeoplePage, PlanetsPage, StarShipsPage, SecretPage, LoginPage} from '../pages';
 // details
-import StarshipDetails from '../sw-components/starship-details'
+import StarShipDetails from '../sw-components/starship-details'
 
 import {SwapiServiceProvider} from '../swapi-service-context';
 
@@ -142,13 +142,13 @@ class App extends Component {
 
                 <Route path="/starship" exact component={() =>
                   <SwapiServiceProvider value={this.state._serviceStarShip}>
-                    <StarshipsPage/>
+                    <StarShipsPage/>
                   </SwapiServiceProvider>
                 }/>
                 {/*details*/}
                 <Route path="/starship/:id" exact
                        render={({match}) => <SwapiServiceProvider value={this.state._serviceStarShip}>
-                         <StarshipDetails itemId={match.params.id}/>
+                         <StarShipDetails itemId={match.params.id}/>
                        </SwapiServiceProvider>
                        }/>
 

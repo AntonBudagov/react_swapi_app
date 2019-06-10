@@ -17,16 +17,7 @@ export default class RandomPlanet extends Component {
   static propTypes = {
     updateInterval: PropTypes.number
   };
-  // static propsTypes = {
-  //   updateInterval: (props, propName, componentName) => {
-  //     const value = props[propName];
-  //
-  //     if (typeof value === 'number' && isNaN(value)) {
-  //      return null
-  //     }
-  //     return new TypeError(`${componentName}: ${propName} must be number`)
-  //   }
-  // };
+
 
   _service = new Planet()
   state = {
@@ -34,13 +25,6 @@ export default class RandomPlanet extends Component {
     loading: true,
     error: false
   };
-
-  // constructor() {
-  //   super();
-  //   console.log('constructor');
-  //   this.updatePlanet();
-  //   setInterval(this.updatePlanet, 1000);
-  // }
 
   componentDidMount() {
     const {updateInterval} = this.props;
@@ -68,7 +52,7 @@ export default class RandomPlanet extends Component {
       error: true,
       loading: false
     });
-  }
+  };
 
   updatePlanet = () => {
     console.log('update');
@@ -76,7 +60,7 @@ export default class RandomPlanet extends Component {
     this._service._read(id).then(
       this.onPlanetLoaded
     ).catch(this.onError)
-  }
+  };
 
 
   render() {

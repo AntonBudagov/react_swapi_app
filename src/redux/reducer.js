@@ -1,7 +1,8 @@
 import actions from './actions';
 
 const initState = {
-  showRandomPlanet: false
+  showRandomPlanet: false,
+  planets: [],
 };
 
 const reducer = (state = initState, action) => {
@@ -9,6 +10,11 @@ const reducer = (state = initState, action) => {
     case actions.RANDOM_PLANET:
       return {
         ...state, showRandomPlanet: !state.showRandomPlanet
+      };
+    case action.GET_PLANET_LIST:
+      return {
+        ...state,
+        planets: action.payload
       };
     default:
       return state;
